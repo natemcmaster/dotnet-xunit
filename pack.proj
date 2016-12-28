@@ -5,12 +5,12 @@
             <Configuration>Release</Configuration>
         </PropertyGroup>
         
-        <MSBuild Projects="$(MSBuildThisFileDirectory)dotnet-xunit\dotnet-xunit.csproj"
+        <MSBuild Projects="$(MSBuildThisFileDirectory)src\dotnet-xunit\dotnet-xunit.csproj"
                  Properties="Configuration=$(Configuration)"
                  Targets="Publish"
             />
 
-        <MSBuild Projects="$(MSBuildThisFileDirectory)xunit.console\xunit.console.csproj"
+        <MSBuild Projects="$(MSBuildThisFileDirectory)src\xunit.console\xunit.console.csproj"
                  Properties="Configuration=$(Configuration)"
                  Targets="Publish"
             />
@@ -24,7 +24,8 @@
 
         <!-- todo use PackNuGetTask when it is implemented -->
         <Exec Command="dotnet nuget pack
-            &quot;$(MSBuildThisFileDirectory)dotnet-xunit.nuspec&quot;
+            &quot;$(MSBuildThisFileDirectory)src\dotnet-xunit.nuspec&quot;
+            --base-path &quot;$(MSBuildThisFileDirectory)src\&quot;
             --output-directory &quot;$(OutputPath)&quot;
             --properties configuration=$(Configuration)" />
     </Target>
