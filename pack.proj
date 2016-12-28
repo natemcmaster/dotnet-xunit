@@ -1,0 +1,31 @@
+<Project ToolsVersion="15.0">
+
+    <Target Name="Pack">
+        <PropertyGroup>
+            <Configuration>Release</Configuration>
+        </PropertyGroup>
+        
+        <MSBuild Projects="$(MSBuildThisFileDirectory)dotnet-xunit\dotnet-xunit.csproj"
+                 Properties="Configuration=$(Configuration)"
+                 Targets="Publish"
+            />
+
+        <MSBuild Projects="$(MSBuildThisFileDirectory)xunit.console\xunit.console.csproj"
+                 Properties="Configuration=$(Configuration)"
+                 Targets="Publish"
+            />
+
+
+        <PropertyGroup>
+            <OutputPath>$(MSBuildThisFileDirectory)artifacts</OutputPath>
+        </PropertyGroup>
+
+        <MakeDir Directories="$(OutputPath)" />
+
+        <!-- todo use PackNuGetTask when it is implemented -->
+        <Exec Command="dotnet nuget pack
+            &quot;$(MSBuildThisFileDirectory)dotnet-xunit.nuspec&quot;
+            --output-directory &quot;$(OutputPath)&quot;
+            --properties configuration=$(Configuration)" />
+    </Target>
+</Project>
